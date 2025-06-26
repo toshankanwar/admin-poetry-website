@@ -28,14 +28,14 @@ export default function DashboardLayout({ children }) {
 
   if (!userLoaded) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-blue-50">
+     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-50 via-purple-100 to-purple-200">
         <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600"></div>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen bg-blue-50">
+    <div className="flex min-h-screenbg-gradient-to-br from-purple-50 via-purple-100 to-purple-200">
       <Sidebar onLogout={handleLogout} />
       <main className="flex-1 p-6 md:p-10">{children}</main>
     </div>
