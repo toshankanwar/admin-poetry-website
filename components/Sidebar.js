@@ -16,6 +16,7 @@ const navItems = [
   { name: 'Overview', href: '/dashboard', icon: <FaChartBar /> },
   { name: 'Poems', href: '/dashboard/poems', icon: <FaBookOpen /> },
   { name: 'Poem Requests', href: '/dashboard/poem-requests', icon: <FaListAlt /> },
+  { name: 'Poem Comments', href: '/dashboard/comments', icon: <FaListAlt /> },
   // { name: 'Users', href: '/dashboard/users', icon: <FaUserFriends /> },
 ];
 
