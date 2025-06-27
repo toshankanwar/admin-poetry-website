@@ -11,6 +11,7 @@ import {
   deleteDoc,
   doc,
   updateDoc,
+  where
 } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -192,8 +193,24 @@ export default function PoemsPage() {
   const handleDeletePoem = async (id) => {
     if (confirm('Delete this poem?')) {
       try {
+        // 1. Get the poem doc for the slug
+        const poemDoc = poems.find((p) => p.id === id);
+        if (poemDoc && poemDoc.slug) {
+          // 2. Find all comments with poemSlug == poemDoc.slug
+          const commentsQuery = query(
+            collection(db, 'comments'),
+            where('poemSlug', '==', poemDoc.slug)
+          );
+          const commentsSnap = await getDocs(commentsQuery);
+          // 3. Delete all matching comments
+          const batchDeletes = commentsSnap.docs.map((comment) =>
+            deleteDoc(doc(db, 'comments', comment.id))
+          );
+          await Promise.all(batchDeletes);
+        }
+        // 4. Delete the poem
         await deleteDoc(doc(db, 'poems', id));
-        showToast("Poem deleted successfully!");
+        showToast("Poem and all its comments deleted successfully!");
         fetchPoems();
       } catch (err) {
         showToast("Failed to delete poem.", "error");
