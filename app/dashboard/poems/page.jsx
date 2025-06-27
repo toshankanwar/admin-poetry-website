@@ -101,19 +101,27 @@ async function generateUniqueSlug(title, excludeId = null) {
 
 // Helper: Send announcement to mailing list
 async function sendPoemAnnouncement(poem) {
-  const mailingListSnap = await getDocs(
-    query(collection(db, 'mailingList'))
-  );
-  const emails = mailingListSnap.docs
-    .map(doc => doc.data())
-    .filter(u => u.subscribed !== false && !!u.email)
-    .map(u => u.email);
+  try {
+    // Step 1: Fetch Mailing List
+    const mailingListSnap = await getDocs(
+      query(collection(db, 'mailingList'))
+    );
+    console.log("Fetched mailingListSnap:", mailingListSnap);
 
-  if (emails.length === 0) return;
-  await fetch('/api/send-poem-announcement', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
+    const emails = mailingListSnap.docs
+      .map(doc => doc.data())
+      .filter(u => u.subscribed !== false && !!u.email)
+      .map(u => u.email);
+
+    console.log("Filtered emails:", emails);
+
+    if (emails.length === 0) {
+      console.warn("No subscribed emails found, aborting sendPoemAnnouncement.");
+      return;
+    }
+
+    // Step 2: Prepare Payload
+    const payload = {
       emails,
       poem: {
         title: poem.title,
@@ -122,8 +130,30 @@ async function sendPoemAnnouncement(poem) {
         content: poem.content,
         datePosted: new Date().toISOString(),
       },
-    }),
-  });
+    };
+    console.log("Request payload:", payload);
+
+    // Step 3: Make the Fetch Request
+    const response = await fetch('http://localhost:5001/api/send-poem-announcement', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+
+    // Step 4: Handle Response
+    const result = await response.json().catch(err => {
+      console.error("Failed to parse JSON response:", err);
+      return null;
+    });
+
+    if (!response.ok) {
+      console.error("API responded with error:", response.status, result);
+    } else {
+      console.log("Poem announcement sent successfully:", result);
+    }
+  } catch (error) {
+    console.error("sendPoemAnnouncement error:", error);
+  }
 }
 
 export default function PoemsPage() {
@@ -191,8 +221,6 @@ export default function PoemsPage() {
         ...form,
         slug,
         datePosted: serverTimestamp(),
-        views: 0,
-        likes: 0,
       });
       showToast("Poem added successfully!");
       fetchPoems();

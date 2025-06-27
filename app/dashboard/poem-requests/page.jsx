@@ -41,7 +41,7 @@ async function sendDecisionEmail({ toEmail, poemTitle, isApproved, note, poemLin
 
   const closing = `Thank you for being a part of PoemSites.\n\nWarm regards,\nTeam PoemSites`;
 
-  await fetch('http://localhost:5001/api/send-email', {
+  await fetch('http://localhost:5001/api/send-aproval-email', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
