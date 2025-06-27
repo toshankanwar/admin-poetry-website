@@ -16,42 +16,73 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 // Helper to send email from the server-side API route
 async function sendDecisionEmail({ toEmail, poemTitle, isApproved, note, poemLink }) {
-  const greeting = `Hello,`;
-  const body = isApproved
-    ? `We are delighted to inform you that your poem "${poemTitle}" has been approved and published on PoemSites!\n\n`
-    : `Thank you for submitting your poem "${poemTitle}" to PoemSites.\n\nUnfortunately, your poem was not approved at this time.\n\n`;
+  // Subject
+  const subject = isApproved
+    ? `Your poem "${poemTitle}" has been approved!`
+    : `Your poem "${poemTitle}" was not approved`;
 
-  const noteSection = `Moderator's Note: ${note || 'No additional comments.'}\n\n`;
+  // HTML version (highly professional, HTML only)
+  const html = `
+    <div style="max-width:600px;margin:0 auto;background:#fff;border-radius:12px;box-shadow:0 2px 12px #ccb7f4;padding:32px 24px 20px 24px;font-family:'Segoe UI',Arial,sans-serif;">
+      <header style="text-align:center;margin-bottom:32px;">
+        <h1 style="color:#7c3aed;font-size:2.1em;margin:0;font-weight:bold;letter-spacing:-1px;">PoemSites ${isApproved ? "Approval" : "Notification"}</h1>
+        <p style="color:#7c3aed;font-size:1.07em;margin-top:10px;">
+          ${isApproved ? "Your Poem Has Been Approved & Published!" : "Poem Submission Update"}
+        </p>
+      </header>
 
-  const shareSection = isApproved
-    ? `You can view your published poem here:\n${poemLink}\n\nFeel free to share your poem with your friends and family! We encourage you to keep writing and sharing your creativity with our community.\n\n`
-    : `We encourage you to keep writing and submit more poems in the future. Your passion for poetry is valued!\n\n`;
+      <section style="margin-bottom:28px;">
+        <h2 style="font-size:1.35em;color:#4b2774;margin-bottom:10px;">"${poemTitle}"</h2>
+        <p style="color:#6d28d9;font-size:1.08em;margin:0 0 18px 0;"><b>Status:</b> <span style="color:${isApproved ? '#059669' : '#b91c1c'};font-weight:bold;">${isApproved ? 'Approved' : 'Not Approved'}</span></p>
+        <p style="color:#6d28d9;font-size:1.08em;margin:0 0 18px 0;"><b>Moderator's Note:</b> ${note || 'No additional comments.'}</p>
+        ${
+          isApproved && poemLink
+            ? `
+        <div style="margin:20px 0;">
+          <a href="${poemLink}" style="display:inline-block;background:#7c3aed;color:#fff;text-decoration:none;font-weight:600;padding:12px 28px;border-radius:6px;font-size:1em;box-shadow:0 1px 4px #e9d5ff;">Read Your Published Poem</a>
+        </div>
+        `
+            : ""
+        }
+        <div style="margin:18px 0 0 0;">
+          <p style="font-size:1em;color:#6d28d9;">
+            ${
+              isApproved
+                ? "Feel free to share your poem with your friends and family! We encourage you to keep writing and sharing your creativity with our community."
+                : "We encourage you to keep writing and submit more poems in the future. Your passion for poetry is valued!"
+            }
+          </p>
+        </div>
+      </section>
 
-  // Developer note for approval
-  const devNoteApproved =
-    `Congratulations once again from the developer of PoemSites, Toshan Kanwar!\n` +
-    `Know more at: https://toshankanwar.website/\n\n`;
+      <hr style="border:none;border-top:1px solid #f3e8ff;margin:28px 0 18px 0;"/>
 
-  // Developer note for rejection/encouragement
-  const devNoteRejected =
-    `A personal note from the developer of PoemSites, Toshan Kanwar:\n` +
-    `Don't be discouraged—every great poet faces rejection at some point!\n` +
-    `Keep writing, keep submitting, and let your creativity shine. \n` +
-    `Learn more about me here: https://toshankanwar.website/\n\n`;
+      <footer style="text-align:center;color:#6c4a84;font-size:0.97em;">
+        <p style="margin-bottom:8px;">
+          ${
+            isApproved
+              ? `Congratulations once again from the developer of PoemSites, Toshan Kanwar!<br/>
+              <a href="https://toshankanwar.website/" style="color:#7c3aed;text-decoration:underline;">Know more about toshan kanwar</a>.`
+              : `A personal note from the developer of PoemSites, Toshan Kanwar:<br/>
+              Don’t be discouraged—every great poet faces rejection at some point!<br/>
+              Keep writing, keep submitting, and let your creativity shine.<br/>
+              <a href="https://toshankanwar.website/" style="color:#7c3aed;text-decoration:underline;">know more about toshan kanwar</a>.`
+          }
+        </p>
+        <p style="margin-top:18px;font-size:0.93em;color:#b197d9;">
+          &mdash; Team PoemSite
+        </p>
+      </footer>
+    </div>
+  `;
 
-  const closing = `Thank you for being a part of PoemSites.\n\nWarm regards,\nTeam PoemSites`;
-
-  await fetch('http://localhost:5001/api/send-aproval-email', {
+  await fetch('https://mail-server-poetry-website.onrender.com/api/send-aproval-email', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       to: toEmail,
-      subject: isApproved
-        ? `Your poem "${poemTitle}" has been approved!`
-        : `Your poem "${poemTitle}" was not approved`,
-      text: `${greeting}\n\n${body}${noteSection}${shareSection}` +
-        (isApproved ? devNoteApproved : devNoteRejected) +
-        closing,
+      subject,
+      html,
     }),
   });
 }

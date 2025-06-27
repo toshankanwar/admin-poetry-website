@@ -50,6 +50,18 @@ export default function AdminCommentsPage() {
   const [loadingPoems, setLoadingPoems] = useState(true);
   const [loadingComments, setLoadingComments] = useState(false);
 
+  // Mobile meta viewport to prevent unwanted zoom
+  useEffect(() => {
+    let viewportTag = document.querySelector('meta[name=viewport]');
+    if (!viewportTag) {
+      viewportTag = document.createElement('meta');
+      viewportTag.name = 'viewport';
+      document.head.appendChild(viewportTag);
+    }
+    viewportTag.content = 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no';
+    return () => {};
+  }, []);
+
   // Fetch all poems and all comments on mount for accurate comment counts
   useEffect(() => {
     async function fetchAllPoemsAndComments() {
@@ -236,6 +248,9 @@ export default function AdminCommentsPage() {
   // Font family for dashboard (modern, clean, readable)
   const dashboardFont = "font-sans font-inter antialiased";
 
+  // Input class for mobile: font-size at least 16px to prevent mobile zoom
+  const inputClass = "w-full px-4 py-2 rounded-lg border border-purple-200 focus:border-purple-400 focus:ring-2 focus:ring-purple-100 outline-none text-gray-800 bg-purple-50 text-base";
+
   return (
     <div className={`w-full min-h-screen bg-gradient-to-br from-purple-100 via-gray-50 to-gray-200 flex flex-col ${dashboardFont}`}>
       <AnimatePresence>
@@ -256,7 +271,7 @@ export default function AdminCommentsPage() {
       </AnimatePresence>
       <div
         className={`
-        flex flex-1 flex-col lg:flex-row gap-8 p-4 md:p-8 xl:px-20
+        flex flex-1 flex-col lg:flex-row gap-8 p-3 sm:p-4 md:p-8 xl:px-20
         pt-16 lg:pt-10 transition-all
       `}
         style={{
@@ -276,18 +291,21 @@ export default function AdminCommentsPage() {
                 maxWidth: 440,
               }}
             >
-              <div className="p-5 border-b border-purple-50 sticky top-0 bg-white/90 z-10 rounded-t-2xl">
+              <div className="p-4 sm:p-5 border-b border-purple-50 sticky top-0 bg-white/90 z-10 rounded-t-2xl">
                 <div className="flex gap-2">
                   <input
-                    className="w-full px-4 py-2 rounded-lg border border-purple-200 focus:border-purple-400 focus:ring-2 focus:ring-purple-100 outline-none text-gray-800 bg-purple-50 text-base"
+                    className={inputClass}
                     placeholder="Search poems..."
                     value={poemSearch}
                     onChange={(e) => setPoemSearch(e.target.value)}
+                    style={{ fontSize: '1rem' }}
+                    inputMode="text"
                   />
                   <select
                     className="rounded-lg border border-purple-200 bg-white px-2 py-2 text-gray-700 text-base"
                     value={poemSort}
                     onChange={(e) => setPoemSort(e.target.value)}
+                    style={{ fontSize: '1rem' }}
                   >
                     <option value="newest">Newest</option>
                     <option value="oldest">Oldest</option>
@@ -326,27 +344,30 @@ export default function AdminCommentsPage() {
             </div>
             {/* Comments Panel */}
             <div className="flex-1 flex flex-col bg-gradient-to-br from-white via-purple-50 to-gray-50 rounded-2xl shadow-xl border border-purple-100 overflow-hidden min-h-[260px]">
-              <div className="p-5 border-b border-purple-50 flex flex-col sm:flex-row sm:items-center gap-4 bg-purple-50/70 sticky top-0 z-10 rounded-t-2xl">
+              <div className="p-4 sm:p-5 border-b border-purple-50 flex flex-col sm:flex-row sm:items-center gap-4 bg-purple-50/70 sticky top-0 z-10 rounded-t-2xl">
                 <div>
-                  <div className="text-2xl font-extrabold text-gray-800 truncate max-w-[320px] sm:max-w-[520px]">
+                  <div className="text-xl sm:text-2xl font-extrabold text-gray-800 truncate max-w-[220px] sm:max-w-[320px] md:max-w-[520px]">
                     {filteredSortedPoems.find((p) => p.id === selectedPoemId)?.title || "No poem selected"}
                   </div>
-                  <div className="text-sm text-purple-700 truncate max-w-[320px] sm:max-w-[520px] font-medium">
+                  <div className="text-sm text-purple-700 truncate max-w-[220px] sm:max-w-[320px] md:max-w-[520px] font-medium">
                     by {filteredSortedPoems.find((p) => p.id === selectedPoemId)?.author || "-"}
                   </div>
                 </div>
                 <div className="flex-1"></div>
                 <div className="flex gap-2 mt-2 sm:mt-0">
                   <input
-                    className="px-4 py-2 rounded-lg border border-purple-200 focus:border-purple-400 focus:ring-2 focus:ring-purple-100 outline-none text-gray-800 bg-purple-50 text-base"
+                    className={inputClass}
                     placeholder="Search comments..."
                     value={commentSearch}
                     onChange={(e) => setCommentSearch(e.target.value)}
+                    style={{ fontSize: '1rem' }}
+                    inputMode="text"
                   />
                   <select
                     className="rounded-lg border border-purple-200 bg-white px-2 py-2 text-gray-700 text-base"
                     value={commentSort}
                     onChange={(e) => setCommentSort(e.target.value)}
+                    style={{ fontSize: '1rem' }}
                   >
                     <option value="newest">Newest</option>
                     <option value="oldest">Oldest</option>
@@ -357,7 +378,7 @@ export default function AdminCommentsPage() {
                   </select>
                 </div>
               </div>
-              <div className="flex-1 overflow-y-auto p-6 space-y-7 bg-white/95">
+              <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-7 bg-white/95">
                 {loadingComments ? (
                   <div className="text-center text-purple-300 py-10 text-base">Loading...</div>
                 ) : filteredSortedComments.length === 0 ? (
@@ -369,10 +390,10 @@ export default function AdminCommentsPage() {
                       initial={{ opacity: 0, y: 16 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.18, type: "spring" }}
-                      className="rounded-2xl border border-purple-50 bg-gradient-to-br from-purple-50/60 via-white to-gray-100/70 shadow hover:shadow-lg transition-shadow p-5"
+                      className="rounded-2xl border border-purple-50 bg-gradient-to-br from-purple-50/60 via-white to-gray-100/70 shadow hover:shadow-lg transition-shadow p-4 sm:p-5"
                     >
-                      <div className="flex items-start gap-5">
-                        <div className="w-11 h-11 flex-shrink-0 rounded-full bg-purple-200/60 flex items-center justify-center font-bold text-purple-800 text-xl shadow-inner border border-purple-100">
+                      <div className="flex items-start gap-4 sm:gap-5">
+                        <div className="w-10 h-10 sm:w-11 sm:h-11 flex-shrink-0 rounded-full bg-purple-200/60 flex items-center justify-center font-bold text-purple-800 text-lg sm:text-xl shadow-inner border border-purple-100">
                           {c.author?.[0]?.toUpperCase() || "U"}
                         </div>
                         <div className="flex-1 min-w-0">
@@ -427,6 +448,7 @@ export default function AdminCommentsPage() {
                                 placeholder={editingCommentId === c.id + "-edit" ? "Edit comment..." : "Write your reply..."}
                                 value={editText}
                                 onChange={e => setEditText(e.target.value)}
+                                style={{ fontSize: '1rem' }}
                               />
                               <div className="flex gap-2">
                                 <button
