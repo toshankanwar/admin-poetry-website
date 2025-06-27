@@ -423,7 +423,7 @@ export default function AdminCommentsPage() {
                             <div className="mt-3 flex flex-col gap-2">
                               <textarea
                                 rows={2}
-                                className="w-full rounded border border-purple-200 focus:border-purple-400 focus:ring-1 focus:ring-purple-100 px-2 py-1 text-base transition"
+                                className="w-full rounded border border-purple-200 focus:border-purple-400 focus:ring-1 focus:ring-purple-100 px-2 py-1 text-base transition text-gray-900"
                                 placeholder={editingCommentId === c.id + "-edit" ? "Edit comment..." : "Write your reply..."}
                                 value={editText}
                                 onChange={e => setEditText(e.target.value)}

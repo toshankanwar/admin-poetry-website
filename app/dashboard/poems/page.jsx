@@ -99,6 +99,33 @@ async function generateUniqueSlug(title, excludeId = null) {
   return slug;
 }
 
+// Helper: Send announcement to mailing list
+async function sendPoemAnnouncement(poem) {
+  const mailingListSnap = await getDocs(
+    query(collection(db, 'mailingList'))
+  );
+  const emails = mailingListSnap.docs
+    .map(doc => doc.data())
+    .filter(u => u.subscribed !== false && !!u.email)
+    .map(u => u.email);
+
+  if (emails.length === 0) return;
+  await fetch('/api/send-poem-announcement', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      emails,
+      poem: {
+        title: poem.title,
+        author: poem.author,
+        slug: poem.slug,
+        content: poem.content,
+        datePosted: new Date().toISOString(),
+      },
+    }),
+  });
+}
+
 export default function PoemsPage() {
   const [user, setUser] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -169,6 +196,8 @@ export default function PoemsPage() {
       });
       showToast("Poem added successfully!");
       fetchPoems();
+      // Send mail to mailing list
+      await sendPoemAnnouncement({ ...form, slug });
     } catch (err) {
       showToast("Failed to add poem.", "error");
     }
@@ -490,7 +519,7 @@ function PoemModal({ open, onClose, onSubmit, initialForm, isEdit }) {
               value={form.title}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 border border-purple-200 rounded-lg bg-purple-50 focus:border-purple-400 focus:ring-1 focus:ring-purple-200 transition"
+              className="w-full px-4 py-2 border border-purple-200 rounded-lg bg-purple-50 focus:border-purple-400 focus:ring-1 focus:ring-purple-200 transition text-gray-900"
             />
             {!isEdit && slug && (
               <div className="text-xs mt-1 text-purple-400">
@@ -506,7 +535,7 @@ function PoemModal({ open, onClose, onSubmit, initialForm, isEdit }) {
               value={form.author}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 border border-purple-200 rounded-lg bg-purple-50 focus:border-purple-400 focus:ring-1 focus:ring-purple-200 transition"
+              className="w-full px-4 py-2 border border-purple-200 rounded-lg bg-purple-50 focus:border-purple-400 focus:ring-1 focus:ring-purple-200 transition text-gray-900"
             />
           </div>
           <div>
@@ -517,7 +546,7 @@ function PoemModal({ open, onClose, onSubmit, initialForm, isEdit }) {
               onChange={handleChange}
               required
               rows={5}
-              className="w-full px-4 py-2 border border-purple-200 rounded-lg bg-purple-50 focus:border-purple-400 focus:ring-1 focus:ring-purple-200 transition"
+              className="w-full px-4 py-2 border border-purple-200 rounded-lg bg-purple-50 focus:border-purple-400 focus:ring-1 focus:ring-purple-200 transition text-gray-900"
             />
           </div>
           <button

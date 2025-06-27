@@ -412,7 +412,7 @@ export default function PoemRequestsPage() {
                 </label>
                 <textarea
                   rows={4}
-                  className="w-full rounded-lg border border-purple-200 px-3 py-2 bg-purple-50 focus:border-purple-400 focus:ring-1 focus:ring-purple-200 transition"
+                  className="w-full rounded-lg border border-purple-200 px-3 py-2 bg-purple-50 focus:border-purple-400 focus:ring-1 focus:ring-purple-200 transition text-gray-900"
                   value={note}
                   onChange={e => setNote(e.target.value)}
                   required={noteModal.type === 'reject'}
