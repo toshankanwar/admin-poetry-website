@@ -98,6 +98,26 @@ export default function LoginPage() {
               <h2 className="text-2xl font-extrabold text-purple-700 mb-1">Admin Login</h2>
               <div className="text-purple-400 text-sm font-medium">Sign in to your dashboard</div>
             </motion.div>
+
+            {/* Admin Credentials - Demo */}
+            <div className="w-full mb-6">
+              <div className="bg-gradient-to-r from-purple-100 via-purple-200 to-purple-100 border border-purple-200 rounded-lg px-4 py-3 text-purple-700 shadow text-sm font-medium flex flex-col gap-1">
+                <div className="flex items-center gap-2">
+                  <svg className="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M13 16h-1v-4h-1m2-4h.01M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  <span>
+                    <span className="font-semibold">Demo Admin Login:</span>
+                  </span>
+                </div>
+                <div>
+                  <span className="font-semibold">Email:</span> <span className="select-all">toshan22102@iiitnr.edu.in</span>
+                </div>
+                <div>
+                  <span className="font-semibold">Password:</span> <span className="select-all">Hellohii@12345</span>
+                </div>
+                <div className="text-xs text-purple-400 mt-1">Use the above credentials to login as admin and explore the dashboard.</div>
+              </div>
+            </div>
+
             <form onSubmit={handleLogin} className="space-y-4 w-full">
               <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.13 }}>
                 <input

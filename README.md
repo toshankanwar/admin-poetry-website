@@ -1,36 +1,115 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🛡️ PoemSite Admin Dashboard
 
-## Getting Started
+[![Live Dashboard](https://img.shields.io/badge/Dashboard-LIVE-8B5CF6?logo=next.js&logoColor=white)](https://admin.poems.toshankanwar.website/)
+[![Main Site](https://img.shields.io/badge/Main%20Site-Visit-2563EB?logo=vercel&logoColor=white)](https://poems.toshankanwar.website/)
+[![Mail Server API](https://img.shields.io/badge/Mail%20Server-API-blueviolet?logo=node.js&logoColor=white)](https://mail-server-poetry-website.onrender.com)
+[![License](https://img.shields.io/github/license/toshankanwar/admin-poetry-website)](LICENSE)
 
-First, run the development server:
+> **PoemSite Admin Dashboard** is a modern, secure, and feature-rich dashboard for the PoemSite platform. Built for moderators and admins, it enables full control over poems, comments, users, requests, and mailing list management — all with an elegant Next.js interface.
+
+---
+
+## 🚀 Live Dashboard
+
+- [https://admin.poems.toshankanwar.website/](https://admin.poems.toshankanwar.website/)
+
+---
+
+## ✨ Features
+
+- **Poem Management:** Create, edit, approve, delete poems, set featured status.
+- **User Management:** List users, search, update roles, ban or delete users.
+- **Comment Moderation:** View, reply (as admin), delete, and audit comment activity.
+- **Poem Requests:** Review, approve, or act on user-submitted poem requests.
+- **Mailing List:** Export subscribers, send mailings, manage opt-in/out.
+- **Analytics:** Dashboard with stats, user activity, poem engagement.
+- **Role-Based Access:** Only admins (role="admin") can access and perform actions.
+- **Mobile-First:** Responsive, fast, and accessible interface.
+- **Open Source:** Built with Next.js, Tailwind CSS, and integrates with Firebase.
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer     | Tech                                                     |
+|-----------|----------------------------------------------------------|
+| Frontend  | [Next.js 15](https://nextjs.org/), [React](https://react.dev/), [Tailwind CSS](https://tailwindcss.com/) |
+| Backend   | [Firebase Firestore](https://firebase.google.com/docs/firestore), [Firebase Auth](https://firebase.google.com/docs/auth) |
+| API       | [Mail Server (Express/Nodemailer)](https://mail-server-poetry-website.onrender.com) |
+| Deployment| [Vercel](https://vercel.com/) or [Firebase Hosting](https://firebase.google.com/docs/hosting) |
+| DevOps    | GitHub Actions (CI/CD), dotenv, ESLint/Prettier          |
+
+---
+
+## 📄 Key Sections & Navigation
+
+| Section                | Description                                        |
+|------------------------|---------------------------------------------------|
+| **Dashboard Home**     | Stats, charts, latest activity, quick actions     |
+| **Poems**              | List, search, add, edit, delete, approve poems    |
+| **Comments**           | Moderate, delete, admin reply, audit              |
+| **Poem Requests**      | View/respond to requests, quick publish           |            |
+
+---
+
+## 🛡️ Security & Access
+
+- **Authentication:** Only Firebase Auth users with `role: "admin"` in Firestore `users` collection can access the dashboard.
+- **Role Management:** Admins can promote/demote users, but not themselves.
+- **Strict Firestore Rules:** All sensitive actions are double-gated (UI + backend rules).
+- **Environment Variables:** All secrets are stored securely; never commit `.env.local`.
+
+---
+
+## 🗃️ Data Models
+
+Follows the [Main PoemSite Data Models](https://github.com/toshankanwar/poetry-website#data-models-firestore), accessing the same Firestore instance.
+
+---
+
+## 🖥️ Local Development
 
 ```bash
+# 1. Clone the admin dashboard repo
+git clone https://github.com/toshankanwar/admin-poetry-website.git
+cd admin-poetry-website
+
+# 2. Install dependencies
+npm install
+
+# 3. Configure .env.local (see .env.example)
+cp .env.example .env.local
+# Fill in Firebase config and secrets
+
+# 4. Start the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# 5. Open http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 🧑‍💻 Contributing
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Fork this repo and create your feature branch (`git checkout -b feature/your-feature`)
+2. Make your changes (code, docs, tests)
+3. Commit and push (`git commit -am 'Add feature' && git push origin feature/your-feature`)
+4. Open a PR — contributions and suggestions are welcome!
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 📫 Contact
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Creator:** [Toshan Kanwar](https://toshankanwar.website)
+- **Main Platform:** [PoemSite](https://poems.toshankanwar.website/)
+- **Mail Server:** [Mail API](https://mail-server-poetry-website.onrender.com)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 📜 License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This dashboard is [MIT licensed](LICENSE).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+> **PoemSite Admin Dashboard** — Modern poetry management for the next generation community.
