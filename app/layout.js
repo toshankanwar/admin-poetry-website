@@ -17,7 +17,7 @@ export const metadata = {
   openGraph: {
     title: "Dashboard | PoemSites",
     description: "PoemSites - Discover and submit beautiful poems",
-    url: "https://poems.toshankanwar.website",
+    url: "https://admin.poems.toshankanwar.website",
     type: "website",
    
   },
@@ -36,10 +36,11 @@ export default function RootLayout({ children }) {
         <title>Dashboard | PoemSites</title>
         <meta name="description" content="PoemSites - Discover and submit beautiful poems" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta property="og:site_name" content="Dashboard | Poemsite"/>
         <meta property="og:title" content="Dashboard | PoemSites" />
         <meta property="og:description" content="PoemSites - Discover and submit beautiful poems" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://poems.toshankanwar.website" />
+        <meta property="og:url" content="https://admin.poems.toshankanwar.website" />
        
         
       </head>
