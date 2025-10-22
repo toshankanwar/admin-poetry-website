@@ -13,7 +13,7 @@ import {
 import slugify from 'slugify';
 import { formatDistanceToNow } from 'date-fns';
 import { AnimatePresence, motion } from 'framer-motion';
-
+const MAIL_API_URL = process.env.NEXT_PUBLIC_MAIL_API_URL;
 // Helper to send email from the server-side API route
 async function sendDecisionEmail({ toEmail, poemTitle, isApproved, note, poemLink }) {
   // Subject
@@ -76,7 +76,7 @@ async function sendDecisionEmail({ toEmail, poemTitle, isApproved, note, poemLin
     </div>
   `;
 
-  await fetch('https://mail-server-poetry-website.onrender.com/api/send-aproval-email', {
+  await fetch(`${MAIL_API_URL}/api/send-approval-email`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({

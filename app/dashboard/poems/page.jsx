@@ -27,7 +27,7 @@ import {
   CheckCircleIcon,
   ExclamationCircleIcon,
 } from '@heroicons/react/24/outline';
-
+const MAIL_API_URL = process.env.NEXT_PUBLIC_MAIL_API_URL;
 // Toast component
 function Toast({ message, type = "success", onClose }) {
   return (
@@ -119,11 +119,14 @@ async function sendPoemAnnouncement(poem) {
       },
     };
 
-    const response = await fetch('https://mail-server-poetry-website.onrender.com/api/send-poem-announcement', {
+
+
+    const response = await fetch(`${MAIL_API_URL}/api/send-poem-announcement`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
+    
 
     if (!response.ok) {
       const errMsg = await response.text();
