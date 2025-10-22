@@ -2,7 +2,6 @@
 
 [![Live Dashboard](https://img.shields.io/badge/Dashboard-LIVE-8B5CF6?logo=next.js&logoColor=white)](https://admin.poems.toshankanwar.website/)
 [![Main Site](https://img.shields.io/badge/Main%20Site-Visit-2563EB?logo=vercel&logoColor=white)](https://poems.toshankanwar.website/)
-[![Mail Server API](https://img.shields.io/badge/Mail%20Server-API-blueviolet?logo=node.js&logoColor=white)](https://mail-server-poetry-website.onrender.com)
 [![License](https://img.shields.io/github/license/toshankanwar/admin-poetry-website)](LICENSE)
 
 > **PoemSite Admin Dashboard** is a modern, secure, and feature-rich dashboard for the PoemSite platform. Built for moderators and admins, it enables full control over poems, comments, users, requests, and mailing list management — all with an elegant Next.js interface.
@@ -35,7 +34,6 @@
 |-----------|----------------------------------------------------------|
 | Frontend  | [Next.js 15](https://nextjs.org/), [React](https://react.dev/), [Tailwind CSS](https://tailwindcss.com/) |
 | Backend   | [Firebase Firestore](https://firebase.google.com/docs/firestore), [Firebase Auth](https://firebase.google.com/docs/auth) |
-| API       | [Mail Server (Express/Nodemailer)](https://mail-server-poetry-website.onrender.com) |
 | Deployment| [Vercel](https://vercel.com/) or [Firebase Hosting](https://firebase.google.com/docs/hosting) |
 | DevOps    | GitHub Actions (CI/CD), dotenv, ESLint/Prettier          |
 
@@ -102,7 +100,6 @@ npm run dev
 
 - **Creator:** [Toshan Kanwar](https://toshankanwar.website)
 - **Main Platform:** [PoemSite](https://poems.toshankanwar.website/)
-- **Mail Server:** [Mail API](https://mail-server-poetry-website.onrender.com)
 
 ---
 
