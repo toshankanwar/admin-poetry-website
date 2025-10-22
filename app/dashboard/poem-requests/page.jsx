@@ -76,7 +76,7 @@ async function sendDecisionEmail({ toEmail, poemTitle, isApproved, note, poemLin
     </div>
   `;
 
-  await fetch(`${MAIL_API_URL}/api/send-approval-email`, {
+  await fetch(`${MAIL_API_URL}/api/send-aproval-email`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
