@@ -10,7 +10,7 @@
 
 ## 🚀 Live Dashboard
 
-- [https://admin.poems.toshankanwar.website/](https://admin.poems.toshankanwar.website/)
+- [https://admin.poems.toshankanwar.in/](https://admin.poems.toshankanwar.in/)
 
 ---
 
@@ -98,8 +98,8 @@ npm run dev
 
 ## 📫 Contact
 
-- **Creator:** [Toshan Kanwar](https://toshankanwar.website)
-- **Main Platform:** [PoemSite](https://poems.toshankanwar.website/)
+- **Creator:** [Toshan Kanwar](https://toshankanwar.in)
+- **Main Platform:** [PoemSite](https://poems.toshankanwar.in/)
 
 ---
 
