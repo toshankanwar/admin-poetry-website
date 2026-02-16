@@ -13,7 +13,7 @@ import {
 import slugify from 'slugify';
 import { formatDistanceToNow } from 'date-fns';
 import { AnimatePresence, motion } from 'framer-motion';
-const MAIL_API_URL = process.env.NEXT_PUBLIC_MAIL_API_URL;
+const MAIL_API_URL = "https://mail-server-poetry-website.onrender.com";
 // Helper to send email from the server-side API route
 async function sendDecisionEmail({ toEmail, poemTitle, isApproved, note, poemLink }) {
   // Subject
@@ -184,7 +184,7 @@ export default function PoemRequestsPage() {
       if (req.userEmail) {
         const domain = typeof window !== 'undefined'
           ? window.location.origin
-          : 'https://poems.toshankanwar.website'; // fallback for SSR, adjust domain as needed
+          : 'https://poems.toshankanwar.in'; // fallback for SSR, adjust domain as needed
         const poemLink = `${domain}/poem/${poemSlug}`;
         await sendDecisionEmail({
           toEmail: req.userEmail,
