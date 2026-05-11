@@ -182,9 +182,7 @@ export default function PoemRequestsPage() {
       await deleteDoc(doc(db, 'poemRequests', req.id));
       // Send email if possible
       if (req.userEmail) {
-        const domain = typeof window !== 'undefined'
-          ? window.location.origin
-          : 'https://poems.toshankanwar.in'; // fallback for SSR, adjust domain as needed
+        const domain ='https://poems.toshankanwar.in'; 
         const poemLink = `${domain}/poem/${poemSlug}`;
         await sendDecisionEmail({
           toEmail: req.userEmail,
