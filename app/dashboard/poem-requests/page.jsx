@@ -62,11 +62,11 @@ async function sendDecisionEmail({ toEmail, poemTitle, isApproved, note, poemLin
           ${
             isApproved
               ? `Congratulations once again from the developer of PoemSites, Toshan Kanwar!<br/>
-              <a href="https://toshankanwar.website/" style="color:#7c3aed;text-decoration:underline;">Know more about toshan kanwar</a>.`
+              <a href="https://toshankanwar.in/" style="color:#7c3aed;text-decoration:underline;">Know more about toshan kanwar</a>.`
               : `A personal note from the developer of PoemSites, Toshan Kanwar:<br/>
               Don’t be discouraged—every great poet faces rejection at some point!<br/>
               Keep writing, keep submitting, and let your creativity shine.<br/>
-              <a href="https://toshankanwar.website/" style="color:#7c3aed;text-decoration:underline;">know more about toshan kanwar</a>.`
+              <a href="https://toshankanwar.in/" style="color:#7c3aed;text-decoration:underline;">know more about toshan kanwar</a>.`
           }
         </p>
         <p style="margin-top:18px;font-size:0.93em;color:#b197d9;">
@@ -184,7 +184,7 @@ export default function PoemRequestsPage() {
       if (req.userEmail) {
         const domain = typeof window !== 'undefined'
           ? window.location.origin
-          : 'https://poems.toshankanwar.website'; // fallback for SSR, adjust domain as needed
+          : 'https://poems.toshankanwar.in'; // fallback for SSR, adjust domain as needed
         const poemLink = `${domain}/poem/${poemSlug}`;
         await sendDecisionEmail({
           toEmail: req.userEmail,
