@@ -70,7 +70,7 @@ async function sendDecisionEmail({ toEmail, poemTitle, isApproved, note, poemLin
           }
         </p>
         <p style="margin-top:18px;font-size:0.93em;color:#b197d9;">
-          &mdash; Team PoemSite
+          &mdash; Team PoemSite Toshan
         </p>
       </footer>
     </div>
